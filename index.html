@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dota 2 Match Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+        }
+
+        .match-container {
+            max-width: 600px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .teams {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .team {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            width: 400px;
+            font-size: 15px;
+        }
+
+        .marker{
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+            width: 200px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: auto;
+            border-radius: 10px;
+            height: 80px;
+        }
+
+        .killQuantity{
+            font-size: 30px;
+            font-weight: 900;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        #matchDuration{
+            font-size: 13px;
+        }
+
+        .radiant {
+            background-color: rgba(0, 128, 0, 0.3);
+        }
+
+        .dire {
+            background-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .player {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .player img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dota 2 Match Information</h1> <br>
+    <div class="match-container">
+        <h2 id="winner"></h2>
+        <div class="marker">
+            <h3 class="killQuantity" id="radiantKills"></h3>
+            <h3 id="matchDuration"></h3>
+            <h3 class="killQuantity" id="direKills"></h3>
+        </div>
+
+
+        <div class="teams">
+            <div id="radiant" class="team radiant">
+                <h3>Radiant</h3>
+            </div>
+            <div id="dire" class="team dire">
+                <h3>Dire</h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getMatchInfo() {
+            const matchId = 8199525535; // Замените на актуальный ID матча
+            const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0IjoiNjQ1YWIxMmEtYjE3MS00Y2NmLWJkM2QtZTE0MWQzODY0MzI3IiwiU3RlYW1JZCI6IjMwNzE5NzU2NiIsIm5iZiI6MTcyNjY4NzgyNCwiZXhwIjoxNzU4MjIzODI0LCJpYXQiOjE3MjY2ODc4MjQsImlzcyI6Imh0dHBzOi8vYXBpLnN0cmF0ei5jb20ifQ.M-ca7BA-MIz0sMVNLVTToCo1VpOMbIudQWmfnvdi9pU'; // Вставьте свой API-ключ
+
+            const url = `https://api.stratz.com/graphql`;
+            const query = `{
+                match(id: ${matchId}) {
+                    id
+                    radiantKills
+                    direKills
+                    durationSeconds
+                    didRadiantWin
+                    players {
+                        steamAccount {
+                            name
+                        }
+                        hero {
+                            displayName
+                            shortName
+                        }
+                        isRadiant
+                    }
+                }
+            }`;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({ query })
+                });
+
+                const data = await response.json();
+                renderMatch(data.data.match);
+            } catch (error) {
+                console.error("Ошибка:", error);
+            }
+        }
+
+        function renderMatch(match) {
+            document.getElementById("winner").innerText = match.didRadiantWin ? "Radiant win!" : "Dire win!";
+            document.getElementById("matchDuration").innerText = `${Math.floor(match.durationSeconds / 60)}:${match.durationSeconds % 60}`
+            document.getElementById("direKills").innerText =  match.direKills.reduce((sum, kills) => sum + kills, 0);
+            document.getElementById("radiantKills").innerText = match.radiantKills.reduce((sum, kills) => sum + kills, 0);
+
+
+
+
+            const radiantDiv = document.getElementById("radiant");
+            const direDiv = document.getElementById("dire");
+
+            match.players.forEach(player => {
+                const playerDiv = document.createElement("div");
+                playerDiv.classList.add("player");
+
+                const heroImg = document.createElement("img");
+                heroImg.src = `https://cdn.stratz.com/images/dota2/heroes/${player.hero.shortName}_icon.png`;
+                heroImg.alt = player.hero.displayName;
+
+                const playerName = document.createElement("span");
+                playerName.innerText = `${player.steamAccount?.name || "Unknown"} - ${player.hero.displayName}`;
+
+                playerDiv.appendChild(heroImg);
+                playerDiv.appendChild(playerName);
+
+                if (player.isRadiant) {
+                    radiantDiv.appendChild(playerDiv);
+                } else {
+                    direDiv.appendChild(playerDiv);
+                }
+            });
+        }
+
+        getMatchInfo();
+    </script>
+</body>
+
+</html>
