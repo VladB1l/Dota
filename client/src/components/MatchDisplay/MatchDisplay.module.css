@@ -1,0 +1,70 @@
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  padding: 20px;
+}
+
+.teams {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.label {
+  margin: 0;
+  padding: 20px;
+  border-radius: 5px 5px 0 0;
+}
+
+.marker {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: auto;
+  border-radius: 10px;
+  height: 80px;
+}
+
+.killQuantity {
+  font-size: 30px;
+  font-weight: 900;
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.team {
+  margin-top: 10px;
+  border-radius: 5px;
+  width: 400px;
+  font-size: 15px;
+}
+
+
+.player {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.player img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.player p {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.kda {
+  margin-left: 10px;
+}

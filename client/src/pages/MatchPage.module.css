@@ -1,0 +1,10 @@
+.wrapper {
+  text-align: center;
+  padding: 20px;
+}
+
+.search{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

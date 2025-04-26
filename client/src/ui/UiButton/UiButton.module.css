@@ -1,0 +1,26 @@
+.button {
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #18181a;
+  border: 2px solid;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.submit {
+  border-color: #587341;
+}
+
+.submit:hover {
+  background-color: #587341;
+}
+
+.cancel {
+  border-color: #823633;
+}
+
+.cancel:hover {
+  background-color: #823633;
+}

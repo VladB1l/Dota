@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
+  text-align: center;
+}
+
+.app {
+  padding: 20px;
+}
+
+.match-container {
+  max-width: 600px;
+  margin: auto;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.teams {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.team {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 400px;
+  font-size: 15px;
+}
+
+.marker {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: auto;
+  border-radius: 10px;
+  height: 80px;
+}
+
+.killQuantity {
+  font-size: 30px;
+  font-weight: 900;
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#matchDuration {
+  font-size: 13px;
+}
+
+.radiant {
+  background-color: rgba(0, 128, 0, 0.3);
+}
+
+.dire {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.KDA {
+  margin-left: 10px;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.player img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.player p {
+  font-size: 15px;
+  font-weight: 800;
+}
