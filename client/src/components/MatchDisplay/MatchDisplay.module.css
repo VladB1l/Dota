@@ -1,31 +1,45 @@
 .container {
   max-width: 800px;
   margin: 30px auto;
-  background: #1e1e1e;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  padding: 20px;
+  /* background: #1e1e1e;
+  color: white; */
+  background: white;
+  color: #252628;
+  border-radius: 12px;
+  border: 1px solid black;
+  box-shadow: 0 0 10px rgba(2, 2, 2, 0.2);
+}
+
+.title {
+  background-color: #252628;
+  margin-top: 0;
+  padding: 10px;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .teams {
   display: flex;
   justify-content: center;
   gap: 20px;
+  padding: 20px;
 }
 
 .label {
   margin: 0;
   padding: 20px;
   border-radius: 5px 5px 0 0;
+  color: white;
 }
 
-.marker {
+.timeDuration {
   display: flex;
   justify-content: center;
   gap: 15px;
   align-items: center;
   width: 200px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: whitesmoke;
+  color: black;
   margin: auto;
   border-radius: 10px;
   height: 80px;
@@ -45,7 +59,6 @@
   width: 400px;
   font-size: 15px;
 }
-
 
 .player {
   display: flex;

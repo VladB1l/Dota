@@ -1,0 +1,32 @@
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px 40px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+  width: 320px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  margin: 0;
+}

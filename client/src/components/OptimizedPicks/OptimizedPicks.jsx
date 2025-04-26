@@ -45,13 +45,13 @@ const OptimizedPicks = ({ optimization }) => {
   });
 
   const getLabelStyle = (isRadiant) => ({
-    backgroundColor: isRadiant ? "#1b2314" : "#240f0e",
-    boxShadow: isRadiant ? "0 2px 5px #1b2314" : "0 4px 5px #240f0e",
+    backgroundColor: isRadiant ? "#587341" : "#823633",
+    boxShadow: isRadiant ? "0 2px 5px #587341" : "0 4px 3px #823633",
   });
 
   return (
     <div className={styles.container}>
-      <h2>Optimized picks</h2>
+      <h2 className={styles.title}>Optimized picks</h2>
       <div className={styles.picksWrapper}>
         {renderTeam(
           optimization.optimizedRadiantDetails,

@@ -1,16 +1,20 @@
-.inputWrapper {
+/* .inputWrapper {
   position: relative;
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #252628;
+  border: 1px solid black;
   border-radius: 8px;
   padding: 6px 12px;
   transition: background-color 0.3s ease;
 }
 
 .inputWrapper:focus-within {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #252628c4;
+}
+
+.inputWrapper:focus-within .icon {
+  color: white;
 }
 
 .input {
@@ -27,6 +31,49 @@
   position: absolute;
   left: 10px;
   color: #888;
+  transition: background-color 0.3s ease;
+}
+
+.keyHint {
+  margin-left: 8px;
+  font-size: 14px;
+  color: black;
+} */
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 6px 12px;
+  transition: background-color 0.3s ease;
+}
+
+.inputWrapper:focus-within {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.inputWrapper:focus-within .icon {
+  color: white;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  padding-left: 26px;
+  flex: 1;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  color: #888;
+  font-size: 18px;
 }
 
 .keyHint {

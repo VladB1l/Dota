@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MatchDisplay.module.css";
 
-const MatchDisplay = ({ match, optimization }) => {
+const MatchDisplay = ({ match }) => {
   const renderPlayers = (team, isRadiant) => (
     <div className={styles.team} style={getTeamStyle(isRadiant)}>
       <h3 className={styles.label} style={getLabelStyle(isRadiant)}>
@@ -28,14 +28,16 @@ const MatchDisplay = ({ match, optimization }) => {
   });
 
   const getLabelStyle = (isRadiant) => ({
-    backgroundColor: isRadiant ? "#1b2314" : "#240f0e",
-    boxShadow: isRadiant ? "0 2px 5px #1b2314" : "0 4px 5px #240f0e",
+    backgroundColor: isRadiant ? "#587341" : "#823633",
+    boxShadow: isRadiant ? "0 2px 5px #587341" : "0 4px 3px #823633",
   });
 
   return (
     <div className={styles.container}>
-      <h2>{match.didRadiantWin ? "Radiant win!" : "Dire win!"}</h2>
-      <div className={styles.marker}>
+      <h2 className={styles.title}>
+        {match.didRadiantWin ? "Radiant win" : "Dire win"}
+      </h2>
+      <div className={styles.timeDuration}>
         <h3>{match.radiantKills.reduce((sum, kills) => sum + kills, 0)}</h3>
         <h3>
           {Math.floor(match.durationSeconds / 60)}:{match.durationSeconds % 60}
