@@ -1,32 +1,51 @@
 .card {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 20px;
-  padding: 20px 40px;
   border-radius: 12px;
   text-decoration: none;
   color: white;
-  font-size: 24px;
   font-weight: bold;
   transition: transform 0.2s ease;
-  width: 320px;
+  border: 1px solid black;
+  box-shadow: 0 0 15px 3px rgba(2, 2, 2, 0.4);
+  width: 100%;
+  /* width: 600px; */
+  margin: 0px auto;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .icon {
   background-color: rgba(255, 255, 255, 0.2);
-  color: white;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 20px;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 20px 20px 0px;
 }
 
 .label {
+  font-size: 24px;
+  margin: 0;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.description {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
