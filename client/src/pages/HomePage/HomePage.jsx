@@ -27,6 +27,7 @@ const HomePage = () => {
   const heroImages = {};
 
   return (
+    // <div className={styles.body}>
     <div className={styles.pageWrapper}>
       <MetaState metaData={metaData} heroImages={heroImages} />
       <div className={styles.cardsWrapper}>
@@ -46,6 +47,7 @@ const HomePage = () => {
         />
       </div>
     </div>
+    // </div>
   );
 };
 
