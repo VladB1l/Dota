@@ -1,0 +1,53 @@
+.card {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 10px;
+  width: 250px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.roleTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  /* background-color: #252628;
+  color: white; */
+  font-size: 10px;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heroImage {
+  width: 110px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: fill;
+  margin-right: 10px;
+}
+
+.heroInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.heroName {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.matches,
+.winrate {
+  font-size: 13px;
+}
+
+.winrateValue {
+  color: green;
+  font-weight: bold;
+}
