@@ -12,7 +12,7 @@ const HomePage = () => {
     const fetchMeta = async () => {
       try {
         const res = await fetch("http://localhost:4000/meta", {
-          method: "POST",
+          method: "GET",
         });
         const data = await res.json();
         setMetaData(data);
@@ -24,12 +24,9 @@ const HomePage = () => {
     fetchMeta();
   }, []);
 
-  const heroImages = {};
-
   return (
-    // <div className={styles.body}>
     <div className={styles.pageWrapper}>
-      <MetaState metaData={metaData} heroImages={heroImages} />
+      <MetaState metaData={metaData} />
       <div className={styles.cardsWrapper}>
         <MainNavigationCard
           label="Heroes"
@@ -47,7 +44,6 @@ const HomePage = () => {
         />
       </div>
     </div>
-    // </div>
   );
 };
 
