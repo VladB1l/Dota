@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UiInput from "@ui/UiInput/UiInput";
 import SteamIcon from "@icons/SteamIcon";
+import LogOutIcon from "@icons/LogOutIcon";
 import styles from "./Header.module.css";
 
 const Header = () => {
@@ -10,6 +11,7 @@ const Header = () => {
 
   const [matchId, setMatchId] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
 
   const isActive = (path) => {
     if (path === "/") {
@@ -47,9 +49,16 @@ const Header = () => {
     }
   };
 
+  useEffect(() => {
+    fetch("http://localhost:4000/api/me", { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => setUser(data.user))
+      .catch((err) => console.error("Error fetching user:", err));
+  }, []);
+
   return (
     <header className={styles.header}>
-      <div>
+      <div className={styles.leftPart}>
         <div className={styles.searchBlock}>
           <UiInput
             value={matchId}
@@ -80,15 +89,33 @@ const Header = () => {
           </Link>
         </nav>
       </div>
-      <a
-        href="https://steamcommunity.com/openid/login"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.steamButton}
-      >
-        <SteamIcon className={styles.steamIcon} />
-        Log In
-      </a>
+
+      {user ? (
+        <div className={styles.profileBlock}>
+          <Link to="/matches" className={styles.profileLink}>
+            <img
+              src={user.photos[2]?.value || user.photos[0]?.value}
+              alt="Avatar"
+              className={styles.avatar}
+            />
+            <span className={styles.username}>{user.displayName}</span>
+          </Link>
+          <a
+            href="http://localhost:4000/logout"
+            className={styles.logoutButton}
+          >
+            <LogOutIcon className={styles.logoutIcon} />
+          </a>
+        </div>
+      ) : (
+        <a
+          href="http://localhost:4000/auth/steam"
+          className={styles.steamButton}
+        >
+          <SteamIcon className={styles.steamIcon} />
+          Log In
+        </a>
+      )}
     </header>
   );
 };
