@@ -1,5 +1,6 @@
-// src/pages/HeroesPage/HeroesPage.jsx
 import React, { useEffect, useState } from "react";
+import TitleCard from "@components/TittleCard/TitleCard";
+import HelmetIcon from "@icons/HelmetIcon";
 
 function HeroesPage() {
   const [heroes, setHeroes] = useState([]);
@@ -27,6 +28,11 @@ function HeroesPage() {
 
   return (
     <div>
+      <TitleCard
+        title="Heroes Page"
+        icon={<HelmetIcon size={90} />}
+        theme="orange"
+      />
       <h1>Список Героев</h1>
       <ul>
         {heroes.map((hero) => (

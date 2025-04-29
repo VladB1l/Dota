@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import MainNavigationCard from "../../components/MainNavigationCard/MainNavigationCard";
-import MetaState from "../../components/MetaState/MetaState";
+import MainNavigationCard from "@components/MainNavigationCard/MainNavigationCard";
+import MetaState from "@components/MetaState/MetaState";
+import TitleCard from "@components/TittleCard/TitleCard";
 import HelmetIcon from "@icons/HelmetIcon";
 import SwordIcon from "@icons/SwordIcon";
+import LogoIcon from "@icons/LogoIcon";
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
@@ -26,6 +28,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.pageWrapper}>
+      <TitleCard title="Main Page" icon={<LogoIcon size={90} />} theme="gray" />
       <MetaState metaData={metaData} />
       <div className={styles.cardsWrapper}>
         <MainNavigationCard

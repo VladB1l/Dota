@@ -17,9 +17,9 @@
 .nav {
   display: flex;
   justify-content: space-around;
-  width: 400px;
-  min-width: 400px;
-  gap: 20px;
+  min-width: 290px;
+  width: 100%;
+  max-width: 400px;
   font-size: 21px;
   color: rgba(255, 255, 255, 0.1);
 }
@@ -90,7 +90,7 @@
 }
 
 .searchBlock {
-  width: 50%;
+  width: 40%;
 }
 
 .profileBlock {
