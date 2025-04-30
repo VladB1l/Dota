@@ -40,6 +40,7 @@
   position: absolute;
   bottom: -4px;
   left: 0;
+  animation: fadeInProfile 0.2s ease forwards;
 }
 
 .active {
@@ -166,5 +167,5 @@
   width: 20px;
   height: 20px;
   transition: 0.4s;
-  /* fill: #ff4b4b; */
+  fill: #ffffff;
 }

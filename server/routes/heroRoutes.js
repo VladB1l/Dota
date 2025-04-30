@@ -43,6 +43,7 @@ async function fetchHeroesFromStratz() {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`,
+            'User-Agent': 'STRATZ_API',
         },
         body: JSON.stringify({ query }),
     });

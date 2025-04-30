@@ -1,0 +1,27 @@
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  width: 75%;
+  max-width: 1500px;
+  margin: 30px auto;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  min-width: 60px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px 0 0 15px;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+}

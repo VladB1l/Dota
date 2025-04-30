@@ -52,6 +52,7 @@ async function fetchMetaFromStratz() {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${STRATZ_API_KEY}`,
+      'User-Agent': 'STRATZ_API',
     },
     body: JSON.stringify({ query }),
   });
@@ -72,10 +73,7 @@ async function fetchMetaFromStratz() {
 async function updateMetaStats() {
   const metaData = await fetchMetaFromStratz();
 
-  // Очистить старую мету
   await pool.query('DELETE FROM hero_meta_stats');
-
-  // Обработка позиций
   const positions = ['pos1', 'pos2', 'pos3', 'pos4', 'pos5'];
 
   for (let i = 0; i < positions.length; i++) {

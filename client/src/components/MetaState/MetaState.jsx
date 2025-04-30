@@ -2,7 +2,7 @@ import React from "react";
 import MetaHeroCard from "../MetaHeroCard/MetaHeroCard";
 import styles from "./MetaState.module.css";
 
-const MetaState = ({ metaData }) => {
+const MetaState = ({ metaData, isLoading = false }) => {
   const groupedByPosition = [1, 2, 3, 4, 5].map((positionId) => {
     const heroesForPosition = metaData
       .filter((hero) => hero.position_id === positionId)
@@ -22,7 +22,7 @@ const MetaState = ({ metaData }) => {
       <h3 className={styles.title}>State of the Meta</h3>
       <div className={styles.heroesWrapper}>
         {groupedByPosition.flat().map((hero) => (
-          <MetaHeroCard key={hero.hero_id} hero={hero} />
+          <MetaHeroCard key={hero.hero_id} hero={hero} isLoading={isLoading} />
         ))}
       </div>
       <p className={styles.note}>

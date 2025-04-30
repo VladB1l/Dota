@@ -1,4 +1,6 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./MetaHeroCard.module.css";
 
 import Pos1Icon from "@icons/Pos1Icon";
@@ -24,7 +26,11 @@ const getRoleInfo = (positionId) => {
   }
 };
 
-const MetaHeroCard = ({ hero }) => {
+const MetaHeroCard = ({ hero, isLoading = false }) => {
+  // if (isLoading) {
+  //   return <Skeleton className={styles.card} />;
+  // }
+
   const { icon, name } = getRoleInfo(hero.position_id);
 
   return (

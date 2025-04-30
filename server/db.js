@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-    user: 'postgres',         // стандартный юзер
-    host: 'localhost',         // локальный сервер
-    database: 'Dota_stats',    // твоя база данных
-    password: '123',           // твой пароль
-    port: 5432,                // стандартный порт PostgreSQL
+    user: 'postgres',         
+    host: 'localhost',         
+    database: 'Dota_stats',    
+    password: '123',           
+    port: 5432,               
 });
 
 export default pool;

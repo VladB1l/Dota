@@ -92,7 +92,7 @@ const Header = () => {
 
       {user ? (
         <div className={styles.profileBlock}>
-          <Link to="/matches" className={styles.profileLink}>
+          <Link to={`/player/${user.steamId32}`} className={styles.profileLink}>
             <img
               src={user.photos[2]?.value || user.photos[0]?.value}
               alt="Avatar"

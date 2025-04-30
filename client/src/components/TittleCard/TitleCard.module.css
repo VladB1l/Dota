@@ -5,13 +5,12 @@
   font-family: "Noto Sans", sans-serif;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   margin: 0px auto;
+  max-height: 120px;
 }
 
 .iconWrapper {
   width: 120px;
   height: 120px;
-  min-width: 60px;
-  min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;

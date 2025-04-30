@@ -1,6 +1,6 @@
 import React from "react";
 
-const LogoIcon = ({ className, size = 18 }) => (
+const LogoIcon2 = ({ className, size = 18 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fillRule="evenodd"
@@ -22,4 +22,4 @@ const LogoIcon = ({ className, size = 18 }) => (
   </svg>
 );
 
-export default LogoIcon;
+export default LogoIcon2;

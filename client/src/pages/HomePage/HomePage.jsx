@@ -4,11 +4,12 @@ import MetaState from "@components/MetaState/MetaState";
 import TitleCard from "@components/TittleCard/TitleCard";
 import HelmetIcon from "@icons/HelmetIcon";
 import SwordIcon from "@icons/SwordIcon";
-import LogoIcon from "@icons/LogoIcon";
+import LogoIcon from "@/assets/icons/LogoIcon";
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
   const [metaData, setMetaData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMeta = async () => {
@@ -20,6 +21,8 @@ const HomePage = () => {
         setMetaData(data);
       } catch (error) {
         console.error("Ошибка при загрузке меты:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -29,7 +32,7 @@ const HomePage = () => {
   return (
     <div className={styles.pageWrapper}>
       <TitleCard title="Main Page" icon={<LogoIcon size={90} />} theme="gray" />
-      <MetaState metaData={metaData} />
+      <MetaState metaData={metaData} isLoading={loading} />
       <div className={styles.cardsWrapper}>
         <MainNavigationCard
           label="Heroes"
