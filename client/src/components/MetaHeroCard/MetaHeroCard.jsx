@@ -27,9 +27,9 @@ const getRoleInfo = (positionId) => {
 };
 
 const MetaHeroCard = ({ hero, isLoading = false }) => {
-  // if (isLoading) {
-  //   return <Skeleton className={styles.card} />;
-  // }
+  if (isLoading) {
+    return <Skeleton className={styles.card} />;
+  }
 
   const { icon, name } = getRoleInfo(hero.position_id);
 

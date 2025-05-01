@@ -25,7 +25,7 @@ router.get('/player/:steamId', async (req, res) => {
           isAnonymous
         }
         matches(request: {
-          take: 10
+          take: 100
           orderBy: DESC
         }) {
           id

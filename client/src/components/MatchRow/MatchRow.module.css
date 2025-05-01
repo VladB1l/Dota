@@ -1,0 +1,112 @@
+.matchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 10px 0;
+  width: 100%;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.linkWrapper:hover {
+  background-color: rgba(172, 168, 168, 0.15);
+  cursor: pointer;
+}
+
+.matchRow > div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.linkWrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  border-bottom: 3px solid rgba(187, 187, 187, 0.5);
+  transition: background-color 0.2s ease;
+}
+
+.linkWrapper:last-child {
+  border-bottom: none;
+}
+.heroImage img {
+  width: 80px;
+  height: 45px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-left: 10px;
+}
+
+.position {
+  width: 30px;
+  text-align: center;
+}
+
+.victory,
+.defeat {
+  width: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.victory {
+  color: #4caf50;
+}
+
+.defeat {
+  color: #f44336;
+}
+
+.kda {
+  width: 70px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.award {
+  width: 30px;
+  text-align: center;
+}
+
+.rankWrapper {
+  position: relative;
+  width: 45px;
+}
+
+
+
+.medal {
+  width: 45px;
+  width: 45px;
+}
+
+.star {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 45px;
+}
+
+.rank {
+  width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.duration {
+  width: 60px;
+  text-align: center;
+}
+
+.date {
+  width: 50px;
+  text-align: right;
+  margin-right: 10px;
+  color: #aaa;
+  font-size: 12px;
+}

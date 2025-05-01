@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import MatchDisplay from "../../components/MatchDisplay/MatchDisplay";
-import OptimizedPicks from "../../components/OptimizedPicks/OptimizedPicks";
-import UiButton from "../../ui/UiButton/UiButton";
+import MatchDisplay from "@components/MatchDisplay/MatchDisplay";
+import OptimizedPicks from "@components/OptimizedPicks/OptimizedPicks";
+import UiButton from "@/ui/UiButton/UiButton";
 import styles from "./MatchPage.module.css";
 
 const MatchPage = () => {
