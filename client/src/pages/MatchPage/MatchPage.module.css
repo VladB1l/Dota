@@ -1,10 +1,27 @@
-.wrapper {
-  text-align: center;
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  width: 75%;
+  max-width: 1500px;
+  margin: 30px auto;
+  align-items: center;
 }
 
-.search{
+.matchIcon {
+  color: white;
+}
+
+.search {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+
+.optimizeButton{
+  margin: 0;
 }

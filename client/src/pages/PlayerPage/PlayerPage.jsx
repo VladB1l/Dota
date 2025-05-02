@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import TitleCard from "@components/TittleCard/TitleCard";
+import TitleCard from "@/components/TitleCard/TitleCard";
 import MatchRow from "@components/MatchRow/MatchRow";
 import UiButton from "@/ui/UiButton/UiButton";
 import PrivateProfileCard from "@components/PrivateProfileCard/PrivateProfileCard";

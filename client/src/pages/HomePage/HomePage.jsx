@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MainNavigationCard from "@components/MainNavigationCard/MainNavigationCard";
 import MetaState from "@components/MetaState/MetaState";
-import TitleCard from "@components/TittleCard/TitleCard";
+import TitleCard from "@/components/TitleCard/TitleCard";
 import HelmetIcon from "@icons/HelmetIcon";
 import SwordIcon from "@icons/SwordIcon";
 import LogoIcon from "@/assets/icons/LogoIcon";

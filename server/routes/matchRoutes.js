@@ -3,19 +3,58 @@ import fetch from 'node-fetch';
 import { STRATZ_API_KEY } from '../config.js';
 
 const router = express.Router();
-const apiKey = `${STRATZ_API_KEY}`;
+const apiKey = STRATZ_API_KEY;
 
 router.post('/match', async (req, res) => {
   const { matchId } = req.body;
   const query = `{
     match(id: ${matchId}) {
-      id radiantKills direKills durationSeconds didRadiantWin
+      id
+      radiantKills
+      direKills
+      durationSeconds
+      didRadiantWin
+      radiantNetworthLeads
+      radiantExperienceLeads
+      predictedWinRates
+      midLaneOutcome
+      laneReport {
+        radiant {
+          midLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+          offLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+          safeLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+        }
+        dire {
+          midLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+          offLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+          safeLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+        }
+      }
       players {
-        steamAccount { name }
+        steamAccount { name seasonRank }
         hero { id displayName shortName }
-        isRadiant kills deaths assists
-        goldPerMinute experiencePerMinute heroDamage
-        towerDamage heroHealing numLastHits role imp
+        isRadiant
+        kills
+        deaths
+        assists
+        goldPerMinute
+        experiencePerMinute
+        numLastHits
+        numDenies
+        position
+        award
+        heroDamage
+        towerDamage
+        heroHealing
+        gold
+        intentionalFeeding
+        stats {
+          campStack
+          goldPerMinute
+          experiencePerMinute
+          wards { time type positionX positionY }
+          runes { rune action gold positionX positionY }
+        }
       }
     }
   }`;

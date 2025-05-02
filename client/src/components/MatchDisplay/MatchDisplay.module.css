@@ -1,13 +1,12 @@
 .container {
-  max-width: 800px;
+  width: 100%;
   margin: 30px auto;
-  /* background: #1e1e1e;
-  color: white; */
   background: white;
   color: #252628;
   border-radius: 12px;
   border: 1px solid black;
   box-shadow: 0 0 10px rgba(2, 2, 2, 0.2);
+  text-align: center;
 }
 
 .title {
@@ -18,11 +17,24 @@
   border-radius: 10px 10px 0px 0px;
 }
 
+button {
+  margin: 20px 0px;
+}
+
 .teams {
   display: flex;
   justify-content: center;
   gap: 20px;
-  padding: 20px;
+  flex-wrap: wrap;
+  margin: 0px 10px 20px 10px;
+}
+
+.shortTeams {
+  display: flex;
+  max-width: 500px;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 350px;
 }
 
 .label {
@@ -54,15 +66,16 @@
 }
 
 .team {
-  margin-top: 10px;
   border-radius: 5px;
-  width: 400px;
   font-size: 15px;
+  width: 100%;
 }
 
 .player {
   display: flex;
   align-items: center;
+  gap: 5px;
+  justify-content: space-between;
   padding: 10px;
 }
 
@@ -70,7 +83,6 @@
   width: 50px;
   height: 50px;
   border-radius: 5px;
-  margin-right: 10px;
 }
 
 .player p {
@@ -78,6 +90,144 @@
   font-weight: 800;
 }
 
-.kda {
-  margin-left: 10px;
+.longTeams {
+  width: 100%;
+}
+
+.scrollWrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.scrollContent {
+  min-width: 1150px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.fullStatsHeader,
+.fullStatsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.fullStatsHeader {
+  font-weight: bold;
+  color: white;
+  background-color: #252628;
+}
+
+.colHero,
+.colName,
+.colRole,
+.colKda,
+.colNet,
+.colLvl,
+.colGpm,
+.colXpm,
+.colHd,
+.colTd,
+.colHeal,
+.colRole,
+.colAward,
+.colRank {
+  text-align: center;
+  padding: 4px;
+}
+
+.colHero {
+  width: 80px;
+}
+.colName {
+  width: 200px;
+}
+.colRole {
+  width: 80px;
+}
+.colKda {
+  width: 80px;
+}
+.colNet {
+  width: 90px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  font-weight: 600;
+}
+.colLvl {
+  width: 40px;
+  border: 2px solid transparent;
+}
+.colGpm {
+  width: 60px;
+}
+.colXpm {
+  width: 60px;
+}
+.colHd {
+  width: 90px;
+}
+.colTd {
+  width: 90px;
+}
+.colHeal {
+  width: 60px;
+}
+.colRole {
+  width: 60px;
+}
+
+.colAward {
+  width: 40px;
+}
+
+.colRank {
+  width: 50px;
+}
+
+.fullStatsRow .colLvl {
+  border-radius: 30%;
+  background-color: #252628;
+  border: 2px solid #999;
+  font-weight: bold;
+  color: white;
+  padding: 4px;
+}
+
+
+.goldIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.smallIcon {
+  width: 80px;
+  height: 45px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.rankWrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.medal {
+  width: 50px;
+  height: 50px;
+}
+
+.star {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
 }
