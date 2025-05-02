@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UiButton from "@/ui/UiButton/UiButton";
+import { Link } from "react-router-dom";
 import goldIcon from "@images/gold.png";
 import BestSupportIcon from "@icons/BestSupportIcon";
 import BestCoreIcon from "@icons/BestCoreIcon";
@@ -55,7 +56,11 @@ const MatchDisplay = ({ match }) => {
         {isRadiant ? "Radiant" : "Dire"}
       </h3>
       {team.map((player, idx) => (
-        <div className={styles.player} key={idx}>
+        <Link
+          to={`/player/${player.steamAccount.id}`}
+          key={idx}
+          className={styles.player}
+        >
           <img
             src={`https://cdn.stratz.com/images/dota2/heroes/${player.hero.shortName}_icon.png`}
             alt={player.hero.displayName}
@@ -82,7 +87,7 @@ const MatchDisplay = ({ match }) => {
               />
             )}
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
@@ -122,7 +127,11 @@ const MatchDisplay = ({ match }) => {
             const starUrl = `https://cdn.stratz.com/images/dota2/seasonal_rank/star_${star}.png`;
 
             return (
-              <div key={i} className={styles.fullStatsRow}>
+              <Link
+                to={`/player/${p.steamAccount.id}`}
+                key={i}
+                className={styles.fullStatsRow}
+              >
                 <div className={styles.colHero}>
                   <img
                     src={`https://cdn.stratz.com/images/dota2/heroes/${p.hero.shortName}_horz.png`}
@@ -170,7 +179,7 @@ const MatchDisplay = ({ match }) => {
                 <div className={styles.colHeal}>
                   {p.heroHealing.toLocaleString()}
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

@@ -93,7 +93,21 @@ async function updateMetaStats() {
 // Получить мету с джойном данных о героях
 router.get('/meta', async (req, res) => {
   try {
-    let { rows } = await pool.query(`
+    // Получаем дату последней записи
+    const { rows: [latest] } = await pool.query(`
+      SELECT MAX(created_at) as last_update FROM hero_meta_stats
+    `);
+
+    const today = new Date().toISOString().split('T')[0]; // формат: yyyy-mm-dd
+    const lastUpdateDate = latest?.last_update?.toISOString().split('T')[0];
+
+    // Если данных нет или они устарели — обновляем
+    if (!lastUpdateDate || lastUpdateDate !== today) {
+      console.log('Обновление меты — устаревшие данные');
+      await updateMetaStats();
+    }
+
+    const result = await pool.query(`
       SELECT 
         hero_meta_stats.hero_id,
         hero_meta_stats.win_count,
@@ -106,28 +120,7 @@ router.get('/meta', async (req, res) => {
       ORDER BY position_id ASC, (win_count::float / NULLIF(match_count, 0)) DESC
     `);
 
-    if (rows.length === 0) {
-      console.log('В базе нет меты. Загружаем из Stratz...');
-      await updateMetaStats();
-
-      // Повторно запрашиваем данные после обновления
-      const result = await pool.query(`
-        SELECT 
-          hero_meta_stats.hero_id,
-          hero_meta_stats.win_count,
-          hero_meta_stats.match_count,
-          hero_meta_stats.position_id,
-          heroes.display_name,
-          heroes.short_name
-        FROM hero_meta_stats
-        JOIN heroes ON heroes.id = hero_meta_stats.hero_id
-        ORDER BY position_id ASC, (win_count::float / NULLIF(match_count, 0)) DESC
-      `);
-
-      rows = result.rows;
-    }
-
-    res.json(rows);
+    res.json(result.rows);
   } catch (error) {
     console.error('Ошибка при получении меты:', error);
     res.status(500).json({ error: 'Ошибка при получении меты' });
@@ -135,7 +128,6 @@ router.get('/meta', async (req, res) => {
 });
 
 
-// Обновить мету из Stratz
 router.post('/meta', async (req, res) => {
   try {
     await updateMetaStats();

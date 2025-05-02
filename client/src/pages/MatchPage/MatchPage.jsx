@@ -18,6 +18,7 @@ const MatchPage = () => {
   const [match, setMatch] = useState(null);
   const [analysis, setAnalysis] = useState(null);
   const [optimization, setOptimization] = useState(null);
+  const [loadingOpt, setLoadingOpt] = useState(false);
 
   useEffect(() => {
     const fetchMatch = async () => {
@@ -100,13 +101,20 @@ const MatchPage = () => {
 
   const fetchOptimization = async () => {
     if (!match) return;
-    const res = await fetch("http://localhost:4000/optimize", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ players: match.players }),
-    });
-    const data = await res.json();
-    setOptimization(data);
+    setLoadingOpt(true);
+    try {
+      const res = await fetch("http://localhost:4000/optimize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ players: match.players }),
+      });
+      const data = await res.json();
+      setOptimization(data);
+    } catch (err) {
+      console.error("Ошибка при оптимизации:", err);
+    } finally {
+      setLoadingOpt(false);
+    }
   };
 
   return (
@@ -121,11 +129,13 @@ const MatchPage = () => {
         <>
           <MatchDisplay match={match} analysis={analysis} />
           <UiButton
-            text="Optimize picks"
+            text={loadingOpt ? "Optimizing..." : "Optimize picks"}
             onClick={fetchOptimization}
             className={styles.optimizeButton}
             type="submit"
+            disabled={loadingOpt}
           />
+          {loadingOpt && <div className={styles.loader}></div>}
           {optimization && <OptimizedPicks optimization={optimization} />}
         </>
       ) : (

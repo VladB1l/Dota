@@ -94,7 +94,7 @@ const Header = () => {
         <div className={styles.profileBlock}>
           <Link to={`/player/${user.steamId32}`} className={styles.profileLink}>
             <img
-              src={user.photos[2]?.value || user.photos[0]?.value}
+              src={user.avatar}
               alt="Avatar"
               className={styles.avatar}
             />

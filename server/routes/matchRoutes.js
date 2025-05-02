@@ -31,7 +31,7 @@ router.post('/match', async (req, res) => {
         }
       }
       players {
-        steamAccount { name seasonRank }
+        steamAccount { id name seasonRank }
         hero { id displayName shortName }
         isRadiant
         kills
