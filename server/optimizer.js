@@ -32,59 +32,53 @@ function calculateFitness(team, opponent, winRateVsMap, winRateWithMap) {
     const synergyWeight = 0.4;
     const counterWeight = 0.6;
     const fitness = synergyScore * synergyWeight + counterScore * counterWeight;
-
-    // console.log(`Fitness for team [${team.join(', ')}]:`);
-    // console.log(`  Synergy Score: ${synergyScore}`);
-    // console.log(`  Counter Score: ${counterScore}`);
-    // console.log(`  Total Fitness: ${fitness}`);
-
     return fitness;
 }
 
+
+function getAvailableHeroes(allHeroIds, exclude, team) {
+    const excludeSet = new Set([...exclude, ...team]);
+    return allHeroIds.filter(id => !excludeSet.has(id));
+}
+
 function generateRandomTeam(allHeroIds, exclude, heroNameMap) {
-    const available = allHeroIds.filter(id => !exclude.includes(id));
-    const team = [];
-    while (team.length < CONFIG.teamSize && available.length > 0) {
+    const available = getAvailableHeroes(allHeroIds, exclude, []);
+    const team = new Set();
+
+    while (team.size < CONFIG.teamSize && available.length > 0) {
         const index = Math.floor(Math.random() * available.length);
         const heroId = available[index];
-        if (heroNameMap[heroId] && !team.includes(heroId)) {
-            team.push(heroId);
+        if (heroNameMap[heroId]) {
+            team.add(heroId);
         }
         available.splice(index, 1);
     }
-    return team;
+
+    return Array.from(team);
 }
 
 function mutate(team, allHeroIds, exclude, heroNameMap) {
-    let available = allHeroIds.filter(id => !exclude.includes(id) && !team.includes(id));
+    let available = getAvailableHeroes(allHeroIds, exclude, team);
     if (available.length === 0) return team;
 
-    let newTeam = [...team];
+    const newTeam = [...team];
     for (let i = 0; i < newTeam.length; i++) {
         if (Math.random() < CONFIG.mutationRate) {
             if (available.length === 0) break;
             const replacementIndex = Math.floor(Math.random() * available.length);
-            let replacement = available[replacementIndex];
-            while (!heroNameMap[replacement] && available.length > 1) {
-                available.splice(replacementIndex, 1);
-                replacement = available[Math.floor(Math.random() * available.length)];
-            }
+            const replacement = available[replacementIndex];
             newTeam[i] = replacement;
-            available = allHeroIds.filter(id => !exclude.includes(id) && !newTeam.includes(id));
+            available = getAvailableHeroes(allHeroIds, exclude, newTeam);
         }
     }
-    return [...new Set(newTeam)].slice(0, CONFIG.teamSize);
+
+    return Array.from(new Set(newTeam)).slice(0, CONFIG.teamSize);
 }
 
 function crossover(parent1, parent2) {
-    let child1 = [];
-    let child2 = [];
-    for (let i = 0; i < CONFIG.teamSize; i++) {
-        child1.push(i < Math.floor(CONFIG.teamSize / 2) ? parent1[i] : parent2[i]);
-        child2.push(i < Math.floor(CONFIG.teamSize / 2) ? parent2[i] : parent1[i]);
-    }
-    child1 = [...new Set(child1)].slice(0, CONFIG.teamSize);
-    child2 = [...new Set(child2)].slice(0, CONFIG.teamSize);
+    const midpoint = Math.floor(CONFIG.teamSize / 2);
+    const child1 = [...new Set([...parent1.slice(0, midpoint), ...parent2.slice(midpoint)])].slice(0, CONFIG.teamSize);
+    const child2 = [...new Set([...parent2.slice(0, midpoint), ...parent1.slice(midpoint)])].slice(0, CONFIG.teamSize);
     return [child1, child2];
 }
 
@@ -134,7 +128,6 @@ export async function runImpactOptimization(players) {
             population.sort((a, b) => calculateFitness(b, currentOpponent, winRateVsMap, winRateWithMap) - calculateFitness(a, currentOpponent, winRateVsMap, winRateWithMap));
             population = population.slice(0, CONFIG.populationSize);
 
-            // console.log(`Generation ${gen + 1}: Best team [${population[0].join(', ')}] with fitness: ${calculateFitness(population[0], currentOpponent, winRateVsMap, winRateWithMap)}`);
         }
 
         return population[0];
@@ -153,15 +146,6 @@ export async function runImpactOptimization(players) {
     const direWinChanceOriginal = 100 - radiantWinChanceOriginal;
     const direWinChanceOptimized = (optimizedDireFitness / (optimizedDireFitness + originalRadiantFitness)) * 100;
 
-    // console.log("Original Radiant Win Chance:", radiantWinChanceOriginal.toFixed(2) + "%");
-    // console.log("Optimized Radiant Win Chance:", radiantWinChanceOptimized.toFixed(2) + "%");
-    // console.log("Original Dire Win Chance:", direWinChanceOriginal.toFixed(2) + "%");
-    // console.log("Optimized Dire Win Chance:", direWinChanceOptimized.toFixed(2) + "%");
-
-    // console.log("Original Radiant Pick:", radiantIds.map(id => heroNameMap[id]).join(', '));
-    // console.log("Optimized Radiant Pick:", optimizedRadiant.map(id => heroNameMap[id]).join(', '));
-    // console.log("Original Dire Pick:", direIds.map(id => heroNameMap[id]).join(', '));
-    // console.log("Optimized Dire Pick:", optimizedDire.map(id => heroNameMap[id]).join(', '));
 
     const optimizedRadiantDetails = optimizedRadiant.map(id => ({
         displayName: heroNameMap[id]?.displayName || 'Unknown',

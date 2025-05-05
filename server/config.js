@@ -2,8 +2,8 @@ export const STRATZ_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0
 export const STEAM_API_KEY = 'D82B1813FA9D376F25E15E0E5E465E26'
 
 export const CONFIG = {
-    populationSize: 100,
-    generations: 1000,
+    populationSize: 10,
+    generations: 100,
     mutationRate: 0.2,
     teamSize: 5,
     allHeroCount: 138,

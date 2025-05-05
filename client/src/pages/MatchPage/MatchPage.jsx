@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { xpTable } from "@ui/matchUtils";
 import MatchDisplay from "@components/MatchDisplay/MatchDisplay";
 import OptimizedPicks from "@components/OptimizedPicks/OptimizedPicks";
 import UiButton from "@/ui/UiButton/UiButton";
 import SwordIcon from "@icons/SwordIcon";
 import TitleCard from "@components/TitleCard/TitleCard";
-import styles from "./MatchPage.module.css";
+import AccordionBlock from "@ui/AccordionBlock/AccordionBlock";
+import RuneStats from "@components/RuneStats/RuneStats";
+import StackStats from "@components/StackStats/StackStats";
+import WardStats from "@components/WardStats/WardStats";
+import LaneStats from "@components/LaneStats/LaneStats";
+// import LeadStats from "@components/LeadStats/LeadStats";
 
-const xpTable = [
-  0, 230, 600, 1080, 1665, 2360, 3160, 4060, 5060, 6160, 7360, 8660, 10060,
-  11560, 13160, 14860, 16660, 18560, 20560, 22660, 24860, 27160, 29560, 32060,
-  34660, 37360, 40160, 43060, 46060,
-];
+import styles from "./MatchPage.module.css";
 
 const MatchPage = () => {
   const { id } = useParams();
@@ -125,9 +127,23 @@ const MatchPage = () => {
         theme="purple"
       />
 
-      {match ? (
+      {match && analysis ? (
         <>
           <MatchDisplay match={match} analysis={analysis} />
+
+          <AccordionBlock title="Rune Stats">
+            <RuneStats match={match} analysis={analysis}/>
+          </AccordionBlock>
+          <AccordionBlock title="Stack Stats">
+            <StackStats match={match} analysis={analysis} />
+          </AccordionBlock>
+          <AccordionBlock title="Ward Stats">
+            <WardStats match={match} analysis={analysis}/>
+          </AccordionBlock>
+          <AccordionBlock title="Lane Stats">
+            <LaneStats match={match} analysis={analysis} />
+          </AccordionBlock>
+
           <UiButton
             text={loadingOpt ? "Optimizing..." : "Optimize picks"}
             onClick={fetchOptimization}
@@ -135,6 +151,7 @@ const MatchPage = () => {
             type="submit"
             disabled={loadingOpt}
           />
+
           {loadingOpt && <div className={styles.loader}></div>}
           {optimization && <OptimizedPicks optimization={optimization} />}
         </>

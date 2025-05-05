@@ -80,13 +80,13 @@ const Header = () => {
           >
             Heroes
           </Link>
-          |
+          {/* |
           <Link
             to="/matches"
             className={isActive("/matches") ? styles.active : styles.link}
           >
             Matches
-          </Link>
+          </Link> */}
         </nav>
       </div>
 

@@ -41,13 +41,13 @@ const HomePage = () => {
           link="/heroes"
           gradient="orange"
         />
-        <MainNavigationCard
+        {/* <MainNavigationCard
           label="Matches"
           description="Search for Dota 2 matches and view detailed statistics"
           icon={<SwordIcon size={44} />}
           link="/matches"
           gradient="purple"
-        />
+        /> */}
       </div>
     </div>
   );

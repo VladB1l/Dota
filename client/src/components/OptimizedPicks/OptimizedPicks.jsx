@@ -1,4 +1,5 @@
 import React from "react";
+import { getTeamStyle, getLabelStyle } from "@ui/matchUtils";
 import styles from "./OptimizedPicks.module.css";
 
 const OptimizedPicks = ({ optimization }) => {
@@ -37,17 +38,6 @@ const OptimizedPicks = ({ optimization }) => {
       </div>
     );
   };
-
-  const getTeamStyle = (isRadiant) => ({
-    backgroundColor: isRadiant
-      ? "rgba(0, 124, 0, 0.3)"
-      : "rgba(219, 0, 0, 0.3)",
-  });
-
-  const getLabelStyle = (isRadiant) => ({
-    backgroundColor: isRadiant ? "#587341" : "#823633",
-    boxShadow: isRadiant ? "0 2px 5px #587341" : "0 4px 3px #823633",
-  });
 
   return (
     <div className={styles.container}>
