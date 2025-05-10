@@ -18,18 +18,6 @@ router.post('/match', async (req, res) => {
       radiantExperienceLeads
       predictedWinRates
       midLaneOutcome
-      laneReport {
-        radiant {
-          midLane { meleeCount rangeCount siegeCount denyCount neutralCount }
-          offLane { meleeCount rangeCount siegeCount denyCount neutralCount }
-          safeLane { meleeCount rangeCount siegeCount denyCount neutralCount }
-        }
-        dire {
-          midLane { meleeCount rangeCount siegeCount denyCount neutralCount }
-          offLane { meleeCount rangeCount siegeCount denyCount neutralCount }
-          safeLane { meleeCount rangeCount siegeCount denyCount neutralCount }
-        }
-      }
       players {
         steamAccount { id name seasonRank }
         hero { id displayName shortName }
@@ -47,12 +35,20 @@ router.post('/match', async (req, res) => {
         towerDamage
         heroHealing
         gold
+        lane
         intentionalFeeding
         stats {
           campStack
           goldPerMinute
+          networthPerMinute
           experiencePerMinute
+          deniesPerMinute
+          lastHitsPerMinute
+          killEvents{time,isSmoke,isGank,gold,xp}
+          deathEvents{time, isAttemptTpOut,goldFed,goldLost}
+          assistEvents{time,gold,xp}
           wards { time type positionX positionY }
+          wardDestruction {time gold experience isWard}
           runes { rune action gold positionX positionY }
         }
       }
@@ -79,3 +75,17 @@ router.post('/match', async (req, res) => {
 });
 
 export default router;
+
+
+      // laneReport {
+      //   radiant {
+      //     midLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+      //     offLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+      //     safeLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+      //   }
+      //   dire {
+      //     midLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+      //     offLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+      //     safeLane { meleeCount rangeCount siegeCount denyCount neutralCount }
+      //   }
+      // }

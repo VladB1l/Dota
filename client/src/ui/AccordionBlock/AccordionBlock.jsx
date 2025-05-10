@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import ChevronDownIcon from "@/assets/icons/ChevronDownIcon";
 import ChevronUpIcon from "@/assets/icons/ChevronUpIcon";
 import styles from "./AccordionBlock.module.css";
 
 const AccordionBlock = ({ title, children }) => {
   const [open, setOpen] = useState(false);
-  const contentRef = useRef(null);
 
   return (
     <div className={styles.accordionWrapper}>
@@ -14,10 +13,9 @@ const AccordionBlock = ({ title, children }) => {
         {open ? <ChevronUpIcon size={20} /> : <ChevronDownIcon size={20} />}
       </div>
       <div
-        ref={contentRef}
         className={`${styles.contentWrapper} ${open ? styles.open : ""}`}
         style={{
-          maxHeight: open ? contentRef.current?.scrollHeight + "px" : "0px",
+          maxHeight: open ? "550px" : "0px",
         }}
       >
         <div className={styles.content}>{children}</div>

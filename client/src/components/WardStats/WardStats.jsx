@@ -6,9 +6,9 @@ import styles from "./WardStats.module.css";
 const WardStats = ({ analysis, match }) => {
   const matchMinutes = Math.floor(match.durationSeconds / 60);
 
-  // Correct ward limit calculation
+
   const initialStock = 2;
-  const restockTime = 135; // in seconds
+  const restockTime = 135;
   const maxObsWards =
     initialStock + Math.floor(match.durationSeconds / restockTime);
 

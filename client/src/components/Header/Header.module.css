@@ -18,6 +18,8 @@
   display: flex;
   justify-content: space-around;
   min-width: 290px;
+  /* justify-content: flex-start;
+  gap: 30px; */
   width: 100%;
   max-width: 400px;
   font-size: 21px;

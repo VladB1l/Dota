@@ -1,0 +1,35 @@
+.laneStatsWrapper > div {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 10px;
+  margin: 20px 0px;
+}
+
+.summaryText {
+  background-color: whitesmoke;
+  text-align: justify;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.leadSummaryText {
+  background-color: #f0f4ff;
+  border-left: 4px solid #4a90e2;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #2a3a4b;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.note {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 20px;
+  text-align: center;
+}

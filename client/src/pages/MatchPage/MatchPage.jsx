@@ -32,7 +32,6 @@ const MatchPage = () => {
         });
         const data = await res.json();
 
-        // enrich players with computed level and networth
         const enrichedPlayers = data.match.players.map((player) => {
           const networth = player.stats.goldPerMinute.reduce(
             (a, v) => a + v,
@@ -68,18 +67,20 @@ const MatchPage = () => {
       sen = { R: 0, D: 0 };
     const stacks = { R: 0, D: 0 };
     const bounty = { R: 0, D: 0 },
-      wisdom = { R: 0, D: 0 };
+      wisdom = { R: 0, D: 0 },
+      water = { R: 0, D: 0 };
 
     match.players.forEach((p) => {
       const team = p.isRadiant ? "R" : "D";
 
       p.stats.wards.forEach((w) => (w.type === 0 ? obs[team]++ : sen[team]++));
 
-      stacks[team] += p.stats.campStack.slice(0, 15).reduce((a, v) => a + v, 0);
+      stacks[team] += Math.max(...p.stats.campStack);
 
       p.stats.runes.forEach((r) => {
         if (r.rune === "BOUNTY" && r.action === "PICKUP") bounty[team]++;
         if (r.rune === "WISDOM" && r.action === "PICKUP") wisdom[team]++;
+        if (r.rune === "WATER" && r.action === "PICKUP") water[team]++;
       });
     });
 
@@ -98,7 +99,17 @@ const MatchPage = () => {
       };
     });
 
-    setAnalysis({ obs, sen, stacks, bounty, wisdom, netLead, xpLead, lanes });
+    setAnalysis({
+      obs,
+      sen,
+      stacks,
+      bounty,
+      wisdom,
+      water,
+      netLead,
+      xpLead,
+      lanes,
+    });
   }, [match]);
 
   const fetchOptimization = async () => {
@@ -132,13 +143,13 @@ const MatchPage = () => {
           <MatchDisplay match={match} analysis={analysis} />
 
           <AccordionBlock title="Rune Stats">
-            <RuneStats match={match} analysis={analysis}/>
+            <RuneStats match={match} analysis={analysis} />
           </AccordionBlock>
           <AccordionBlock title="Stack Stats">
             <StackStats match={match} analysis={analysis} />
           </AccordionBlock>
           <AccordionBlock title="Ward Stats">
-            <WardStats match={match} analysis={analysis}/>
+            <WardStats match={match} analysis={analysis} />
           </AccordionBlock>
           <AccordionBlock title="Lane Stats">
             <LaneStats match={match} analysis={analysis} />

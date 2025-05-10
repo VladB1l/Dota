@@ -1,0 +1,62 @@
+.laneWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowWrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: whitesmoke;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  min-width: 280px;
+  width: 50%;
+  flex: 1;
+}
+
+.radiant {
+  border: 2px solid #66bb6a;
+}
+
+.dire {
+  border: 2px solid #ef5350;
+}
+
+.heroImg {
+  width: 80px;
+  height: auto;
+  margin-right: 12px;
+  border-radius: 8px;
+}
+
+.stats {
+  display: flex;
+
+  gap: 4px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 15px;
+}
+
+.info div {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.icon {
+  width: 24px;
+  height: 15px;
+  margin: 0 4px;
+}
