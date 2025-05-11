@@ -1,11 +1,11 @@
 import React from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import observerIcon from "@images/WardObserverIcon.webp";
 import sentryIcon from "@images/WardSentryIcon.webp";
 import styles from "./WardStats.module.css";
 
-const WardStats = ({ analysis, match }) => {
+const WardStats = forwardRef(({ analysis, match }, ref) => {
   const matchMinutes = Math.floor(match.durationSeconds / 60);
-
 
   const initialStock = 2;
   const restockTime = 135;
@@ -100,6 +100,23 @@ const WardStats = ({ analysis, match }) => {
       : `Dewarding was evenly matched between both sides. `
   }This combination of uptime and vision denial shows how vision contributed to each team's strategic awareness.`;
 
+  useImperativeHandle(ref, () => ({
+    getData: () => {
+      return {
+        title: "Ward Stats",
+        content: [
+          `Observer Wards — Radiant: ${analysis.obs.R}, Dire: ${analysis.obs.D}`,
+          `Sentry Wards — Radiant: ${analysis.sen.R}, Dire: ${analysis.sen.D}`,
+          `Match duration: ${matchMinutes} minutes (max ${maxObsWards} observer wards)`,
+          "",
+          `Analysis:`,
+          ...observerResult.map((line) => line.text),
+          summaryText,
+        ],
+      };
+    },
+  }));
+
   return (
     <div className={styles.container}>
       <div className={styles.iconRow}>
@@ -147,6 +164,6 @@ const WardStats = ({ analysis, match }) => {
       </div>
     </div>
   );
-};
+});
 
 export default WardStats;

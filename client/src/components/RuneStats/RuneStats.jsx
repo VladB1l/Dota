@@ -1,10 +1,11 @@
 import React from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import bountyIcon from "@images/BountyRuneIcon.webp";
 import waterIcon from "@images/WaterRuneIcon.webp";
 import wisdomIcon from "@images/WisdomRuneIcon.webp";
 import styles from "./RuneStats.module.css";
 
-const RuneStats = ({ analysis }) => {
+const RuneStats = forwardRef(({ analysis }, ref) => {
   const buildRuneBlock = (
     icon,
     label,
@@ -51,6 +52,24 @@ const RuneStats = ({ analysis }) => {
       ? `Dire had better control over Wisdom Runes, giving supports an experience boost.`
       : `Wisdom Rune pickups were even, meaning no team had a level advantage from runes.`;
 
+  useImperativeHandle(ref, () => ({
+    getData: () => {
+      return {
+        title: "Rune Stats",
+        content: [
+          `Bounty Runes — Radiant: ${analysis.bounty.R}, Dire: ${analysis.bounty.D}`,
+          `Water Runes — Radiant: ${analysis.water.R}, Dire: ${analysis.water.D}`,
+          `Wisdom Runes — Radiant: ${analysis.wisdom.R}, Dire: ${analysis.wisdom.D}`,
+          "",
+          `Analysis:`,
+          `Bounty Rune Analysis: ${bountyText}`,
+          `Water Rune Analysis: ${waterText}`,
+          `Wisdom Rune Analysis: ${wisdomText}`,
+        ],
+      };
+    },
+  }));
+
   return (
     <div className={styles.container}>
       {buildRuneBlock(
@@ -76,6 +95,6 @@ const RuneStats = ({ analysis }) => {
       )}
     </div>
   );
-};
+});
 
 export default RuneStats;

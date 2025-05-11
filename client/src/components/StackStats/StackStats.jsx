@@ -1,7 +1,8 @@
 import React from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import styles from "./StackStats.module.css";
 
-const StackStats = ({ analysis }) => {
+const StackStats = forwardRef(({ analysis }, ref) => {
   const result = [];
   const minimumStacks = 5;
   const radiantStacks = analysis.stacks.R;
@@ -41,6 +42,22 @@ const StackStats = ({ analysis }) => {
       ? `${betterTeam} had a slight stacking advantage, potentially resulting in minor farm lead.`
       : `${betterTeam} showed significant stacking effort, which likely translated into better economy and faster item progression.`;
 
+  useImperativeHandle(ref, () => ({
+    getData: () => {
+      return {
+        title: "Stack Stats",
+        content: [
+          `Radiant Stacks: ${radiantStacks}`,
+          `Dire Stacks: ${direStacks}`,
+          "",
+          `Analysis:`,
+          ...result.map((line) => line.text),
+          summaryText,
+        ],
+      };
+    },
+  }));
+
   return (
     <div className={styles.container}>
       <div className={styles.statsRow}>
@@ -71,6 +88,6 @@ const StackStats = ({ analysis }) => {
       </div>
     </div>
   );
-};
+});
 
 export default StackStats;

@@ -1,4 +1,5 @@
 import React from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import LaneBlock from "@components/LaneBlock/LaneBlock";
 import { xpTable } from "@ui/matchUtils";
 import styles from "./LaneStats.module.css";
@@ -129,7 +130,7 @@ const getLaningPhaseSummary = (match, lanes) => {
   return `${leadSummary} ${winningSide} managed to get ahead in networth by 10 minutes, although lane outcomes were more evenly split.`;
 };
 
-const LaneStats = ({ match }) => {
+const LaneStats = forwardRef(({ match }, ref) => {
   const lanes = {
     TOP: { radiant: [], dire: [], label: "Top Lane" },
     MID: { radiant: [], dire: [], label: "Mid Lane" },
@@ -167,6 +168,56 @@ const LaneStats = ({ match }) => {
   });
 
   const laningSummary = getLaningPhaseSummary(match, lanes);
+
+  useImperativeHandle(ref, () => ({
+    getData: () => {
+      if (!lanes)
+        return { title: "Lane Stats", content: ["No lane data available."] };
+
+      const laneSections = Object.entries(lanes).map(([key, lane]) => {
+        if (!lane.radiant || !lane.dire) return [`${key} — data missing.`];
+
+        const winner = calculateWinner(lane.radiant, lane.dire);
+        const lines = [];
+
+        lines.push(`${lane.label} — Winner: ${winner}`);
+
+        if (lane.radiant.length > 0) {
+          lines.push(`Radiant:`);
+          lane.radiant.forEach((p) => {
+            lines.push(
+              `- ${p.name} (${p.hero}) — K/D/A: ${p.kills}/${p.deaths}/${p.assists}, LH/DN: ${p.lastHits}/${p.denies}, NW: ${p.networth}, Lvl: ${p.level}`
+            );
+          });
+        }
+
+        if (lane.dire.length > 0) {
+          lines.push(`Dire:`);
+          lane.dire.forEach((p) => {
+            lines.push(
+              `- ${p.name} (${p.hero}) — K/D/A: ${p.kills}/${p.deaths}/${p.assists}, LH/DN: ${p.lastHits}/${p.denies}, NW: ${p.networth}, Lvl: ${p.level}`
+            );
+          });
+        }
+
+        lines.push(
+          `Summary: ${getSummary(lane.label, lane.radiant, lane.dire, winner)}`
+        );
+        lines.push("");
+
+        return lines;
+      });
+
+      return {
+        title: "Lane Stats",
+        content: [
+          ...laneSections.flat(),
+          "Overall Laning Summary:",
+          laningSummary,
+        ],
+      };
+    },
+  }));
 
   return (
     <div className={styles.laneStatsWrapper}>
@@ -212,6 +263,6 @@ const LaneStats = ({ match }) => {
       <p className={styles.leadSummaryText}>{laningSummary}</p>
     </div>
   );
-};
+});
 
 export default LaneStats;

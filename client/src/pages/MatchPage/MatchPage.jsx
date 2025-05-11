@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { xpTable } from "@ui/matchUtils";
 import MatchDisplay from "@components/MatchDisplay/MatchDisplay";
+import MatchReportGenerator from "@ui/MatchReportGenerator/MatchReportGenerator";
 import OptimizedPicks from "@components/OptimizedPicks/OptimizedPicks";
 import UiButton from "@/ui/UiButton/UiButton";
 import SwordIcon from "@icons/SwordIcon";
@@ -21,6 +22,11 @@ const MatchPage = () => {
   const [analysis, setAnalysis] = useState(null);
   const [optimization, setOptimization] = useState(null);
   const [loadingOpt, setLoadingOpt] = useState(false);
+
+  const runeStatsRef = useRef();
+  const wardStatsRef = useRef();
+  const stackStatsRef = useRef();
+  const laneStatsRef = useRef();
 
   useEffect(() => {
     const fetchMatch = async () => {
@@ -84,21 +90,6 @@ const MatchPage = () => {
       });
     });
 
-    const minute = 10,
-      idx = minute - 1;
-    const netLead = match.radiantNetworthLeads[idx];
-    const xpLead = match.radiantExperienceLeads[idx];
-    const lanes = ["midLane", "offLane", "safeLane"].map((lane) => {
-      const r = match.laneReport.radiant[idx][lane];
-      const d = match.laneReport.dire[idx][lane];
-      const farmR = r.meleeCount + r.rangeCount + r.siegeCount + r.denyCount;
-      const farmD = d.meleeCount + d.rangeCount + d.siegeCount + d.denyCount;
-      return {
-        lane,
-        winner: farmR > farmD ? "Radiant" : farmR < farmD ? "Dire" : "Tie",
-      };
-    });
-
     setAnalysis({
       obs,
       sen,
@@ -106,9 +97,6 @@ const MatchPage = () => {
       bounty,
       wisdom,
       water,
-      netLead,
-      xpLead,
-      lanes,
     });
   }, [match]);
 
@@ -137,22 +125,33 @@ const MatchPage = () => {
         icon={<SwordIcon className={styles.matchIcon} size={90} />}
         theme="purple"
       />
+      <MatchReportGenerator
+        match={match}
+        analysis={analysis}
+        optimization={optimization}
+        refs={{
+          runeStatsRef,
+          stackStatsRef,
+          wardStatsRef,
+          laneStatsRef,
+        }}
+      />
 
       {match && analysis ? (
         <>
           <MatchDisplay match={match} analysis={analysis} />
 
           <AccordionBlock title="Rune Stats">
-            <RuneStats match={match} analysis={analysis} />
+            <RuneStats ref={runeStatsRef} match={match} analysis={analysis} />
           </AccordionBlock>
           <AccordionBlock title="Stack Stats">
-            <StackStats match={match} analysis={analysis} />
+            <StackStats ref={stackStatsRef} match={match} analysis={analysis} />
           </AccordionBlock>
           <AccordionBlock title="Ward Stats">
-            <WardStats match={match} analysis={analysis} />
+            <WardStats ref={wardStatsRef} match={match} analysis={analysis} />
           </AccordionBlock>
           <AccordionBlock title="Lane Stats">
-            <LaneStats match={match} analysis={analysis} />
+            <LaneStats ref={laneStatsRef} match={match} analysis={analysis} />
           </AccordionBlock>
 
           <UiButton
