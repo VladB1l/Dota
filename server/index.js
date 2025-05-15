@@ -8,6 +8,7 @@ import heroRoutes from './routes/heroRoutes.js';
 import abilityRoutes from './routes/abilityRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import playerRoutes from './routes/playerRoutes.js'
+import favoritesRoutes from "./routes/favoritesRoutes.js";
 
 const app = express();
 const PORT = 4000;
@@ -22,6 +23,7 @@ app.use(metaRoutes);
 app.use(heroRoutes);
 app.use(abilityRoutes);
 app.use(playerRoutes);
+app.use(favoritesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

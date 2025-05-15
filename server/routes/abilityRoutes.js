@@ -6,7 +6,7 @@ import { STRATZ_API_KEY } from '../config.js';
 const router = express.Router();
 const apiKey = STRATZ_API_KEY;
 
-// Функция загрузки способностей
+
 async function fetchAbilitiesFromStratz() {
   const query = `{
     constants {
@@ -49,7 +49,7 @@ async function fetchAbilitiesFromStratz() {
   return json.data.constants.abilities;
 }
 
-// Роут получения способностей
+
 router.get('/abilities', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM abilities');

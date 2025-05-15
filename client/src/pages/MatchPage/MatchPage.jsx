@@ -16,7 +16,7 @@ import LaneStats from "@components/LaneStats/LaneStats";
 
 import styles from "./MatchPage.module.css";
 
-const MatchPage = () => {
+const MatchPage = ({ currentUser }) => {
   const { id } = useParams();
   const [match, setMatch] = useState(null);
   const [analysis, setAnalysis] = useState(null);
@@ -139,7 +139,7 @@ const MatchPage = () => {
 
       {match && analysis ? (
         <>
-          <MatchDisplay match={match} analysis={analysis} />
+          <MatchDisplay match={match} currentUser={currentUser} />
 
           <AccordionBlock title="Rune Stats">
             <RuneStats ref={runeStatsRef} match={match} analysis={analysis} />

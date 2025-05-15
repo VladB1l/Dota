@@ -1,4 +1,3 @@
-// server/routes/authRoutes.js
 import express from 'express';
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
@@ -11,29 +10,29 @@ import pool from '../db.js';
 const router = express.Router();
 const PgSession = connectPgSimple(session);
 
-// Вспомогательная функция преобразования SteamID64 → SteamID32
+
 function steam64To32(steamId64) {
     return Number(BigInt(steamId64) - 76561197960265728n);
 }
 
-// --- МIDDLEWARE ДЛЯ СЕССИЙ ---
+
 router.use(session({
     store: new PgSession({
-        pool: pool,           // используем ваш pool из db.js
-        tableName: 'session', // по умолчанию connect-pg-simple создаст эту таблицу
+        pool: pool,           
+        tableName: 'session',
     }),
-    secret: 'your_secret_key',  // смените на что-то своё
+    secret: 'your_secret_key',  
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
+        maxAge: 30 * 24 * 60 * 60 * 1000, 
     }
 }));
 
 router.use(passport.initialize());
 router.use(passport.session());
 
-// --- PASSPORT SETUP ---
+
 passport.serializeUser((user, done) => {
     done(null, user);
 });
@@ -41,7 +40,7 @@ passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
 
-// SteamStrategy
+
 passport.use(new SteamStrategy(
     {
         returnURL: 'http://localhost:4000/auth/steam/return',
@@ -56,7 +55,7 @@ passport.use(new SteamStrategy(
                 const displayName = profile.displayName;
                 const avatar = profile.photos[2]?.value || profile.photos[0]?.value || null;
 
-                // Добавляем или обновляем запись в users
+
                 const existing = await pool.query(
                     'SELECT 1 FROM users WHERE steam_id_32 = $1',
                     [steamId32]
@@ -80,7 +79,7 @@ passport.use(new SteamStrategy(
                     );
                 }
 
-                // Прокидываем данные в req.user
+
                 profile.steamId32 = steamId32;
                 profile.avatar = avatar;
                 return done(null, profile);
@@ -92,23 +91,20 @@ passport.use(new SteamStrategy(
     }
 ));
 
-// --- ROUTES ---
-
-// 1) Инициировать логин через Steam
 router.get('/auth/steam',
     passport.authenticate('steam', { failureRedirect: '/' })
 );
 
-// 2) Callback от Steam после логина
+
 router.get('/auth/steam/return',
     passport.authenticate('steam', { failureRedirect: '/' }),
     (req, res) => {
-        // успешно залогинились — редиректим на фронт
+
         res.redirect('http://localhost:3000');
     }
 );
 
-// 3) Получить данные текущего юзера
+
 router.get('/api/me', (req, res) => {
     if (req.isAuthenticated()) {
         res.json({
@@ -124,7 +120,7 @@ router.get('/api/me', (req, res) => {
     }
 });
 
-// 4) Logout: удаляем из users и из сессии + куку
+
 router.get('/logout', async (req, res) => {
     try {
         if (req.isAuthenticated()) {

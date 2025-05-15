@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import StarIcon from "@icons/StarIcon";
 import TitleCard from "@/components/TitleCard/TitleCard";
 import MatchRow from "@components/MatchRow/MatchRow";
 import UiButton from "@/ui/UiButton/UiButton";
 import PrivateProfileCard from "@components/PrivateProfileCard/PrivateProfileCard";
 import styles from "./PlayerPage.module.css";
 
-const PlayerPage = () => {
+const PlayerPage = ({ currentUser }) => {
   const { steamId } = useParams();
   const [playerData, setPlayerData] = useState(null);
   const [heroList, setHeroList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [favoriteMatchIds, setFavoriteMatchIds] = useState([]);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const matchesPerPage = 10;
 
   useEffect(() => {
@@ -37,12 +40,67 @@ const PlayerPage = () => {
     fetchData();
   }, [steamId]);
 
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!currentUser) return;
+
+      try {
+        const res = await fetch(
+          `http://localhost:4000/favorites/${currentUser.steamId32}`,
+          {
+            credentials: "include",
+          }
+        );
+        const ids = await res.json();
+        setFavoriteMatchIds(ids.map((id) => Number(id)));
+      } catch (err) {
+        console.error("Failed to fetch favorites", err);
+      }
+    };
+
+    fetchFavorites();
+  }, [currentUser]);
+
+  const handleToggleFavorite = async (matchId) => {
+    if (!currentUser) {
+      alert("Please log in to use this function.");
+      return;
+    }
+
+    const isFav = favoriteMatchIds.includes(matchId);
+    const method = isFav ? "DELETE" : "POST";
+
+    try {
+      await fetch("http://localhost:4000/favorites", {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: currentUser.steamId32, matchId }),
+        credentials: "include",
+      });
+
+      setFavoriteMatchIds((prev) =>
+        isFav
+          ? prev.filter((id) => id !== Number(matchId))
+          : [...prev, Number(matchId)]
+      );
+    } catch (err) {
+      console.error("Ошибка при изменении избранного:", err);
+    }
+  };
+
   const steamAccount = playerData?.steamAccount;
-  const matches = playerData?.matches || [];
+  const allMatches = playerData?.matches || [];
+  const filteredMatches = showFavoritesOnly
+    ? allMatches.filter((match) => favoriteMatchIds.includes(match.id))
+    : allMatches;
+
   const indexOfLastMatch = currentPage * matchesPerPage;
   const indexOfFirstMatch = indexOfLastMatch - matchesPerPage;
-  const currentMatches = matches.slice(indexOfFirstMatch, indexOfLastMatch);
-  const totalPages = Math.ceil(matches.length / matchesPerPage);
+  const currentMatches = filteredMatches.slice(
+    indexOfFirstMatch,
+    indexOfLastMatch
+  );
+  const totalPages = Math.ceil(filteredMatches.length / matchesPerPage);
 
   const getShortName = (heroId) => {
     const hero = heroList.find((h) => h.id === heroId);
@@ -178,13 +236,37 @@ const PlayerPage = () => {
               </div>
             </div>
           </div>
-
           <div className={styles.matchesBlock}>
-            <h3 className={styles.matchesTitle}>Matches</h3>
+            <div className={styles.matchesTitle}>
+              <h3>Matches </h3>
+              {currentUser && (
+                <button
+                  className={styles.favoriteButton}
+                  onClick={() => {
+                    if (!currentUser) {
+                      alert("Please log in to use this function.");
+                      return;
+                    }
+                    setShowFavoritesOnly((prev) => !prev);
+                  }}
+                >
+                  <StarIcon
+                    className={
+                      showFavoritesOnly
+                        ? styles.starIconActive
+                        : styles.starIcon
+                    }
+                    size={34}
+                  />
+                </button>
+              )}
+            </div>
+
             <div className={styles.matchRows}>
               <div className={styles.scrollWrapper}>
                 <div className={styles.tableHeader}>
                   <div>
+                    <div className={styles.colFavorite}></div>
                     <div className={styles.colHero}>Hero</div>
                     <div className={styles.colRole}>Role</div>
                     <div className={styles.colResult}>Result</div>
@@ -205,11 +287,14 @@ const PlayerPage = () => {
                       match={match}
                       player={match.players[0]}
                       heroShortName={getShortName(match.players[0].heroId)}
+                      isFavorite={favoriteMatchIds.includes(match.id)}
+                      onToggleFavorite={handleToggleFavorite}
                     />
                   ))}
                 </div>
               </div>
             </div>
+
             <div className={styles.pagination}>
               <UiButton
                 text="Prev"

@@ -90,18 +90,18 @@ async function updateMetaStats() {
   }
 }
 
-// Получить мету с джойном данных о героях
+
 router.get('/meta', async (req, res) => {
   try {
-    // Получаем дату последней записи
+
     const { rows: [latest] } = await pool.query(`
       SELECT MAX(created_at) as last_update FROM hero_meta_stats
     `);
 
-    const today = new Date().toISOString().split('T')[0]; // формат: yyyy-mm-dd
+    const today = new Date().toISOString().split('T')[0]; 
     const lastUpdateDate = latest?.last_update?.toISOString().split('T')[0];
 
-    // Если данных нет или они устарели — обновляем
+
     if (!lastUpdateDate || lastUpdateDate !== today) {
       console.log('Обновление меты — устаревшие данные');
       await updateMetaStats();

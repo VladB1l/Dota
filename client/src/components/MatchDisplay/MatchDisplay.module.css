@@ -10,11 +10,41 @@
 }
 
 .title {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
   background-color: #252628;
-  margin-top: 0;
   padding: 10px;
   color: white;
   border-radius: 10px 10px 0px 0px;
+  margin-bottom: 20px;
+}
+
+.favoriteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.favoriteButton h2 {
+  margin: 0;
+}
+
+.starIcon {
+  color: transparent;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.starIcon:hover {
+  color: gold;
+}
+
+.starIconActive {
+  color: gold;
 }
 
 button {
