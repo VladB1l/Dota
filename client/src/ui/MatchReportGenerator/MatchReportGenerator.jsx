@@ -62,11 +62,29 @@ const MatchReportGenerator = ({ match, analysis, optimization, refs }) => {
 
     if (optimization) {
       docContent.push(
-        { text: "\nOptimized Picks:", style: "sectionHeader" },
-        { text: "Radiant Optimal Picks:", bold: true },
-        ...optimization.radiant.map((h) => `- ${h}`),
+        { text: "\n\nOptimized Picks:", style: "sectionHeader" },
+        {
+          text: `Original Dire Winrate: ${optimization.direWinChanceOriginal}%`,
+          bold: true,
+        },
+        {
+          text: `Optimized Dire Winrate: ${optimization.direWinChanceOptimized}%`,
+          bold: true,
+        },
+        {
+          text: `Original Radiant Winrate: ${optimization.radiantWinChanceOriginal}%`,
+          bold: true,
+        },
+        {
+          text: `Optimized Radiant Winrate: ${optimization.radiantWinChanceOptimized}%`,
+          bold: true,
+        },
+        { text: "Radiant Optimal Picks:", bold: true, margin: [0, 8, 0, 0] },
+        ...optimization.optimizedRadiantDetails.map(
+          (h) => `- ${h.displayName}`
+        ),
         { text: "Dire Optimal Picks:", bold: true, margin: [0, 8, 0, 0] },
-        ...optimization.dire.map((h) => `- ${h}`)
+        ...optimization.optimizedDireDetails.map((h) => `- ${h.displayName}`)
       );
     }
 
