@@ -164,7 +164,7 @@
 .scrollWrapper {
   overflow-x: auto;
   width: 100%;
-  min-width: 630px;
+  min-width: 810px;
 }
 
 .tableHeader {
@@ -175,7 +175,7 @@
   font-weight: bold;
   font-size: 14px;
   padding: 10px 0;
-  min-width: 570px;
+  min-width: 810px;
   border-top: 3px solid rgba(187, 187, 187, 0.5);
   border-bottom: 3px solid rgba(187, 187, 187, 0.5);
 }
@@ -186,7 +186,7 @@
 }
 
 .matchTable {
-  min-width: 630px;
+  min-width: 810px;
 }
 
 .colFavorite {
@@ -195,6 +195,9 @@
   margin-left: 15px;
 }
 
+.colNote {
+  min-width: 190px;
+}
 .colHero {
   width: 80px;
   text-align: center;

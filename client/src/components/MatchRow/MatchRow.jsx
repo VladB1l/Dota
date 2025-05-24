@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getRoleInfo, getAwardIcon, formatDate } from "@ui/matchUtils";
 import StarIcon from "@icons/StarIcon";
@@ -10,7 +12,52 @@ const MatchRow = ({
   heroShortName,
   isFavorite,
   onToggleFavorite,
+  currentUser,
 }) => {
+  const [note, setNote] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleRowClick = () => {
+    navigate(`/match/${match.id}`);
+  };
+
+  useEffect(() => {
+    if (!currentUser) return;
+    fetch(
+      `http://localhost:4000/match-notes/${currentUser.steamId32}/${match.id}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.note) {
+          setNote(data.note);
+          setInputValue(data.note);
+        } else {
+          setNote("");
+          setInputValue("");
+        }
+      });
+  }, [currentUser, match.id]);
+
+  const handleSaveNote = async () => {
+    if (!currentUser) return;
+    if (inputValue.length > 15)
+      return alert("Note must be under 15 characters.");
+
+    await fetch("http://localhost:4000/match-notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: currentUser.steamId32,
+        matchId: match.id,
+        note: inputValue,
+      }),
+    });
+
+    setNote(inputValue);
+  };
+
   const kda = `${player.kills} / ${player.deaths} / ${player.assists}`;
   const date = formatDate(match.startDateTime);
   const duration = `${Math.floor(match.durationSeconds / 60)}m ${
@@ -27,12 +74,12 @@ const MatchRow = ({
   const awardIcon = getAwardIcon(player.award);
 
   const handleFavoriteClick = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     onToggleFavorite?.(match.id);
   };
 
   return (
-    <Link to={`/match/${match.id}`} className={styles.linkWrapper}>
+    <div className={styles.linkWrapper} onClick={handleRowClick}>
       <div className={styles.matchRow}>
         <div>
           <button
@@ -59,6 +106,23 @@ const MatchRow = ({
           <div className={styles.award}>{awardIcon}</div>
         </div>
 
+        {currentUser && (
+          <div onClick={(e) => e.stopPropagation()}>
+            <input
+              className={styles.noteInput}
+              type="text"
+              maxLength={20}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onBlur={handleSaveNote}
+              placeholder="Add note..."
+            />
+          </div>
+        )}
+        {note && !currentUser && (
+          <div className={styles.noteDisplay}>Note: {note}</div>
+        )}
+
         <div className={styles.rightBlock}>
           <div className={styles.rankWrapper}>
             {star !== 0 && (
@@ -70,7 +134,7 @@ const MatchRow = ({
           <div className={styles.date}>{date}</div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

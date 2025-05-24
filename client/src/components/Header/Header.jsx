@@ -73,13 +73,13 @@ const Header = () => {
           <Link to="/" className={isActive("/") ? styles.active : styles.link}>
             Main Page
           </Link>
-          |
+          {/* |
           <Link
             to="/heroes"
             className={isActive("/heroes") ? styles.active : styles.link}
           >
             Heroes
-          </Link>
+          </Link> */}
           {/* |
           <Link
             to="/matches"

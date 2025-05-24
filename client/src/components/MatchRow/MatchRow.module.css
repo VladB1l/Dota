@@ -26,7 +26,7 @@
   display: block;
   width: 100%;
   border-bottom: 3px solid rgba(187, 187, 187, 0.5);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.4s ease;
 }
 
 .linkWrapper:last-child {
@@ -59,6 +59,37 @@
 
 .starIconActive {
   color: gold;
+}
+
+.noteInput {
+  border: transparent;
+  border-top: 3px solid transparent;
+  border-radius: 20px;
+  padding: 10px 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+  background-color: rgba(172, 168, 168, 0.15);
+  width: 174px;
+}
+.noteInput:focus {
+  border-top: 3px solid rgba(187, 187, 187, 0.5);
+  color: black;
+  background-color: #f7fbe9;
+}
+.noteDisplay {
+  font-size: 13px;
+  color: #555;
+  width: 174px;
+  margin: 0;
+}
+
+.linkWrapper:hover .noteInput {
+  background-color: transparent;
+}
+
+.linkWrapper:hover .noteInput:focus {
+  background-color: #f7fbe9;
 }
 
 .position {

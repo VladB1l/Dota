@@ -32,15 +32,15 @@ const HomePage = () => {
   return (
     <div className={styles.pageWrapper}>
       <TitleCard title="Main Page" icon={<LogoIcon size={90} />} theme="gray" />
-      <MetaState metaData={metaData} isLoading={loading} />
+      {/* <MetaState metaData={metaData} isLoading={loading} /> */}
       <div className={styles.cardsWrapper}>
-        <MainNavigationCard
+        {/* <MainNavigationCard
           label="Heroes"
           description="View stats, builds and information about Dota 2 heroes"
           icon={<HelmetIcon size={44} />}
           link="/heroes"
           gradient="orange"
-        />
+        /> */}
         {/* <MainNavigationCard
           label="Matches"
           description="Search for Dota 2 matches and view detailed statistics"

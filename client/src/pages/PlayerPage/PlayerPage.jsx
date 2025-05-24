@@ -273,6 +273,7 @@ const PlayerPage = ({ currentUser }) => {
                     <div className={styles.colKda}>K/D/A</div>
                     <div className={styles.colAward}>Award</div>
                   </div>
+                  <div className={styles.colNote}></div>
                   <div>
                     <div className={styles.colRank}>Rank</div>
                     <div className={styles.colDuration}>Duration</div>
@@ -289,6 +290,7 @@ const PlayerPage = ({ currentUser }) => {
                       heroShortName={getShortName(match.players[0].heroId)}
                       isFavorite={favoriteMatchIds.includes(match.id)}
                       onToggleFavorite={handleToggleFavorite}
+                      currentUser={currentUser}
                     />
                   ))}
                 </div>
