@@ -21,6 +21,12 @@
   margin-bottom: 20px;
 }
 
+.killsCount{
+  background-color: rgb(230, 221, 221);
+  border-radius: 10px;
+  padding: 10px;
+}
+
 .favoriteButton {
   background: none;
   border: none;

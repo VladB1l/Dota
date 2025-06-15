@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { getRoleInfo, getAwardIcon, formatDate } from "@ui/matchUtils";
 import StarIcon from "@icons/StarIcon";
 import styles from "./MatchRow.module.css";
@@ -82,16 +81,17 @@ const MatchRow = ({
     <div className={styles.linkWrapper} onClick={handleRowClick}>
       <div className={styles.matchRow}>
         <div>
-          <button
-            onClick={handleFavoriteClick}
-            className={styles.favoriteButton}
-          >
-            <StarIcon
-              className={isFavorite ? styles.starIconActive : styles.starIcon}
-              size={30}
-            />
-          </button>
-
+          <div onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={handleFavoriteClick}
+              className={styles.favoriteButton}
+            >
+              <StarIcon
+                className={isFavorite ? styles.starIconActive : styles.starIcon}
+                size={30}
+              />
+            </button>
+          </div>
           <img
             src={`https://cdn.stratz.com/images/dota2/heroes/${heroShortName}_horz.png`}
             className={styles.heroImage}

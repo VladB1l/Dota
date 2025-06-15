@@ -68,12 +68,16 @@ const MatchDisplay = ({ match, currentUser }) => {
       </div>
 
       <div className={styles.timeDuration}>
-        <h3>{match.radiantKills.reduce((s, k) => s + k, 0)}</h3>
+        <h3 className={styles.killsCount}>
+          {match.radiantKills.reduce((s, k) => s + k, 0)}
+        </h3>
         <h3>
           {Math.floor(match.durationSeconds / 60)}:
           {String(match.durationSeconds % 60).padStart(2, "0")}
         </h3>
-        <h3>{match.direKills.reduce((s, k) => s + k, 0)}</h3>
+        <h3 className={styles.killsCount}>
+          {match.direKills.reduce((s, k) => s + k, 0)}
+        </h3>
       </div>
 
       <UiButton

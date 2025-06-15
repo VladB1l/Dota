@@ -3,7 +3,7 @@ export const STEAM_API_KEY = 'D82B1813FA9D376F25E15E0E5E465E26'
 
 export const CONFIG = {
     populationSize: 10,
-    generations: 100,
+    generations: 500,
     mutationRate: 0.2,
     teamSize: 5,
     allHeroCount: 138,

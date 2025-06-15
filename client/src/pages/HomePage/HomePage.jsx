@@ -32,7 +32,7 @@ const HomePage = () => {
   return (
     <div className={styles.pageWrapper}>
       <TitleCard title="Main Page" icon={<LogoIcon size={90} />} theme="gray" />
-      {/* <MetaState metaData={metaData} isLoading={loading} /> */}
+      <MetaState metaData={metaData} isLoading={loading} />
       <div className={styles.cardsWrapper}>
         {/* <MainNavigationCard
           label="Heroes"

@@ -176,45 +176,42 @@ const LaneStats = forwardRef(({ match }, ref) => {
 
       const laneSections = Object.entries(lanes).map(([key, lane]) => {
         if (!lane.radiant || !lane.dire) return [`${key} — data missing.`];
-
         const winner = calculateWinner(lane.radiant, lane.dire);
-        const lines = [];
 
-        lines.push(`${lane.label} — Winner: ${winner}`);
+        const radiantFormatted = lane.radiant.map((p) => ({
+          team: "Radiant",
+          name: p.name,
+          hero: p.hero,
+          kda: `${p.kills}/${p.deaths}/${p.assists}`,
+          lh_dn: `${p.lastHits}/${p.denies}`,
+          nw: p.networth,
+          lvl: p.level,
+        }));
 
-        if (lane.radiant.length > 0) {
-          lines.push(`Radiant:`);
-          lane.radiant.forEach((p) => {
-            lines.push(
-              `- ${p.name} (${p.hero}) — K/D/A: ${p.kills}/${p.deaths}/${p.assists}, LH/DN: ${p.lastHits}/${p.denies}, NW: ${p.networth}, Lvl: ${p.level}`
-            );
-          });
-        }
+        const direFormatted = lane.dire.map((p) => ({
+          team: "Dire",
+          name: p.name,
+          hero: p.hero,
+          kda: `${p.kills}/${p.deaths}/${p.assists}`,
+          lh_dn: `${p.lastHits}/${p.denies}`,
+          nw: p.networth,
+          lvl: p.level,
+        }));
 
-        if (lane.dire.length > 0) {
-          lines.push(`Dire:`);
-          lane.dire.forEach((p) => {
-            lines.push(
-              `- ${p.name} (${p.hero}) — K/D/A: ${p.kills}/${p.deaths}/${p.assists}, LH/DN: ${p.lastHits}/${p.denies}, NW: ${p.networth}, Lvl: ${p.level}`
-            );
-          });
-        }
-
-        lines.push(
-          `Summary: ${getSummary(lane.label, lane.radiant, lane.dire, winner)}`
-        );
-        lines.push("");
-
-        return lines;
+        return {
+          label: lane.label,
+          winner,
+          summary: getSummary(lane.label, lane.radiant, lane.dire, winner),
+          players: [...radiantFormatted, ...direFormatted],
+        };
       });
 
       return {
         title: "Lane Stats",
-        content: [
-          ...laneSections.flat(),
-          "Overall Laning Summary:",
-          laningSummary,
-        ],
+        content: {
+          lanes: laneSections,
+          overallSummary: laningSummary,
+        },
       };
     },
   }));
